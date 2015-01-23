@@ -63,23 +63,18 @@ Based on the estimated unobserved values, I can then draw the complete graph of 
 
 ##### (2)[Mack Chain Ladder Method](http://www.casact.net/library/astin/vol23no2/213.pdf)
 
-The Mack Chain Ladder model forcecasts IBNR (Incurred But Not Reported) claims based on a historical cumulative claims development triangle and estimates the standard error around them. It can be regarded as a weighted linear regression through the origin for each development period: lm(y ~ x + 0, weights=w/x^(2- alpha)), where y is the vector of claims at development period k + 1 and x is the vector of claims at development period k.
+The Mack Chain Ladder model forcecasts IBNR (Incurred But Not Reported) claims based on a historical cumulative claims triangles and calculattes the standard error for the reserves estimates. It can be regarded as a weighted linear regression through the origin for each development period: lm(y ~ x + 0, weights=w/x^(2- alpha)), where y is the vector of claims at development period k + 1 and x is the vector of claims at development period k.
 
-The Mack Chain Ladder method is implemented in the ChainLadder package via the function MackChainLadder. I can then access the loss development factors and the full triangle. 
 
-![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/MCLmethod/FullData_MCLmethod.png)
-
-To check whether Mack chain-ladder method is valid for the dataset, we can see that there are no trends in all the residual plots. 
+The Mack Chain Ladder method is implemented in the ChainLadder package via the function MackChainLadder._But_ this method will only works if accident years are independent, thus I dont think Mack Chain Ladder Method is applicable for my dataset. To ensure my statement is valid, we can check whether there are trends in the residual plots. 
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/MCLmethod/Rplot_MCLmethod.png)
- 
-I then plot the development, including the forecast and estimated standard errors by origin period by setting the argument lattice=TRUE.
-![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/MCLmethod/Rplot_IndivMCLmethod.png)
+
+The residual plots above show the standarised residuals against fitted values, origin period, calendar periodm and development period. There seems to be trends in the bottom left and top right plots. The patterns in any direction can be result of trends and thus require further investigations. 
+
 
 ----
 
-### Further question
-Forecast future claims development beyond development age 10? 
 
 ----
 
