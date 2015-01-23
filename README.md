@@ -34,13 +34,17 @@ For a better illustration, the development of the incremental claims is shown in
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Data/Rplot_IndivInc.png)
 
 ----
+####General definition:
+- [Paid losses](http://www.riskmanagementblog.com/2011/10/03/understanding-loss-development-factors/): the toatal losses actually paid during the policy period
+- [Incurred losses](http://www.riskmanagementblog.com/2011/10/03/understanding-loss-development-factors/) (Report losses): include paid losses plus any loss reserves for open claims
 
-#### Chain-Ladder Methods
 
-Chain-Ladder is a deterministic algorithm to forecast claims based on historical data. It assumes that the proportional developments of claims from one development period to the next are the same for all origin years.
+#### Chain Ladder Methods
 
-##### (1) Loss Development Factor method
-Loss Development Factor method uses the basic chain ladder function, which link ratios are calculated as the volume weighted average development ratios of a cumulative loss development triangle from one development period to the next.
+Chain Ladder methods are deterministic algorithms to forecast outstanding claims on the basis of historical data. They assumes the cumulative claims losses for each business year develop similarly by delay year. The statistical approach uses the incremental claims, but the chain ladder methods uses cumulative claims. 
+
+##### (1) [Loss Development Factor method](http://www.riskmanagementblog.com/2011/10/03/understanding-loss-development-factors/)
+Loss Development Factor method uses the basic chain ladder function, which development factors are calculated as the ratios of cumulative claims losses from one development period to the next. 
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/LDFmethod/LaTexFormula_LDFmethod.png)
 
@@ -57,14 +61,11 @@ Based on the estimated unobserved values, I can then draw the complete graph of 
 
 ----
 
-##### (2) Mack-chain-ladder Method
+##### (2)[Mack Chain Ladder Method](http://www.casact.net/library/astin/vol23no2/213.pdf)
 
-The Mack-chain-ladder model can be regarded as a weighted linear regression through the origin for each development period: lm(y ~ x + 0, weights=w/x^(2-
-alpha)), where y is the vector of claims at development period k + 1 and x is the
-vector of claims at development period k.
+The Mack Chain Ladder model forcecasts IBNR (Incurred But Not Reported) claims based on a historical cumulative claims development triangle and estimates the standard error around them. It can be regarded as a weighted linear regression through the origin for each development period: lm(y ~ x + 0, weights=w/x^(2- alpha)), where y is the vector of claims at development period k + 1 and x is the vector of claims at development period k.
 
-The Mack method is implemented in the ChainLadder package via the function
-MackChainLadder. I can then access the loss development factors and the full triangle. 
+The Mack Chain Ladder method is implemented in the ChainLadder package via the function MackChainLadder. I can then access the loss development factors and the full triangle. 
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/MCLmethod/FullData_MCLmethod.png)
 
