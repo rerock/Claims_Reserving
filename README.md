@@ -1,4 +1,8 @@
-## Table of Contents
+
+# Claims Paid Losses (Mercury Insurance Group)
+###### _Jenny Liang (Wen Liang)_
+----
+## 0. Table of Contents
 
 [**1. Introduction**](https://github.com/wliang88/ClaimsLossAnalysis#1-introduction)  
 [**2. Objective**](https://github.com/wliang88/ClaimsLossAnalysis#2-objective)  
@@ -6,11 +10,6 @@
 [**4. Modeling**](https://github.com/wliang88/ClaimsLossAnalysis#4-modeling)  
 [**5. Conclusion**](https://github.com/wliang88/ClaimsLossAnalysis#5-conclusion)  
 [**6. Bibliography**](https://github.com/wliang88/ClaimsLossAnalysis#6-bibliography)
-
------
-# Claims Paid Losses (Mercury Insurance Group)
-###### _Jenny Liang (Wen Liang)_
-
 
 ----
 
