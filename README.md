@@ -1,4 +1,14 @@
-## Claims Paid Losses (Mercury Insurance Group)
+## Table of Contents
+
+[**1. Introduction**](https://github.com/wliang88/ClaimsLossAnalysis#1-introduction)  
+[**2. Objective**](https://github.com/wliang88/ClaimsLossAnalysis#2-objective)  
+[**3. Data Overview**](https://github.com/wliang88/ClaimsLossAnalysis#3-data-overview)  
+[**4. Modeling**](https://github.com/wliang88/ClaimsLossAnalysis#4-modeling)  
+[**5. Conclusion**](https://github.com/wliang88/ClaimsLossAnalysis#5-conclusion)  
+[**6. Bibliography**](https://github.com/wliang88/ClaimsLossAnalysis#6-bibliography)
+
+-----
+# Claims Paid Losses (Mercury Insurance Group)
 ###### _Jenny Liang (Wen Liang)_
 
 
@@ -132,7 +142,7 @@ For a better illustration of how fitted my model capture the observed claims dev
 
 There are some overestimations and underestimations and underestimations at the middle year of the claim development. But the fit is satisfying. The total amount of financial instruments that need to be held in claims reserve under this model is 28779.
 
-## 5. Conclusion:
+## 5. Conclusion
 The main goal of this paper was to learn the preliminary reserving techniques for insurance companies like Merry Insurance Group. Once an appropriate model is built, the predicted claim reserve is approximately around 28778, whether I was using the deterministic method, applying the implemented stochastic reserving models, or building statistical models.  
 
 ----
