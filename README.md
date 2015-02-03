@@ -1,10 +1,10 @@
-### Claims Paid Losses (Mercury Insurance Group)
+## Claims Paid Losses (Mercury Insurance Group)
 ###### _Jenny Liang (Wen Liang)_
 
 
 ----
 
-### 1. Introduction
+## 1. Introduction
 
 [Glenn Meyers and Peng Shi](http://www.casact.org/research/index.cfm?fa=loss_reserves_data) provide databases that include major personal and commercial lines of business from U.S. property casualty insurers. For the purpose of this project, only
 the data involving Mercury Insurance Group will be used. Unfortunately, the datasets that contain information for Mercury Insurance Group are only the Workers’ Compensation and Other Liability datasets. I choose Other Liability line of business dataset because Mercury’s information from Workers’ Compensation mostly is zero. 
@@ -15,7 +15,7 @@ The Claim Paid Losses in Other Liability Insurance for accident years in 1988-19
 
 ----
 
-### 2. Objective
+## 2. Objective
 
 I aim to forecast the future claims development for the bottom right half of the triangle. In other words, I am estimating unobserved values and quantify the outstanding loss liabilities for each origin year. 
 
@@ -24,7 +24,7 @@ For the first part of this paper, I will be using the loss development factor de
 
 ----
 
-### 3. Data Overview
+## 3. Data Overview
 
 The cumulative claims development is visualized in the below Figure. Most of the insured incidents take 3-6 years to settle down and close. The growth rate is the highest after 2 - 3 years from the claims origin point but it does slow down with the increasing development period. 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Data/Rplot_CumClaim.png)
@@ -34,9 +34,9 @@ Incremental claims for the development years are displayed in the figure below. 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/2.png)
 ----
 
-###4. Modeling
+##4. Modeling
 
-### 4. 1 Chain Ladder -- Reserving Methods
+### 4.1 Chain Ladder -- Reserving Methods
 
 Chain Ladder methods use algorithms to forecast outstanding claims on the basis of historical data. They assume the cumulative claims losses for each business year develop similarly by delay year. Deterministic reserving method, Loss Development Factor method, uses the most basic chain ladder function. The Chain Ladder package in R has implementations of stochastic reserving models such as Mack, Munich, and Boot Strap Chain Ladder.
 
@@ -86,19 +86,19 @@ BootCL=BootChainLadder(top_tri,R=800,process.distr="od.pois")
 
 The set of reserves obtained in this way forms the predicted distribution, from which summary statistics such as mean, prediction error and quantiles can be derived. The distribution of the IBNR appears to follow a log-normal distribution, so let’s keep that in mind. 
 
-### 4. 2. Statistical Modeling
+### 4.2. Statistical Modeling
 There are three main categories in statistical predictive modeling: Classical Linear Models, Generalized Linear Models(GLMs), and Data Mining. An easy way to think about GLMs is as models that generalize the error term distribution to a family of distributions, called exponential family. It includes normal, binomial, Poisson, and gamma distributions among others. In addition, the response variable in GLM is related to linear regression through a link function. Common used link functions are Identity, Inverse, Inverse Squared, Log and Logit. The differences between Linear Models and GLMs is as followed.
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/9.png)
 
  
-### 4.2.1 Pre-Analysis  
+#### 4.2.1 Pre-Analysis  
  
 The chain ladder methods uses cumulative claims, but statistical approaches uses the incremental claims. The R package ChainLadder comes with two helper functions, cum2incr and incr2cum. They can transform cumulative triangles into incremental triangles and vice versa. The development of the incremental claims is shown in below figure individually for each origin period. we can see that the outcome is a continuous outcome, but is right skewed and always positive. 
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/10.png)
 
-### 4.2.2 Linear Model with log-transformed outcome 
+#### 4.2.2 Linear Model with log-transformed outcome 
 Since the distribution has a positive skew, taking a natural logarithm of the variable helps fitting variable into a model. Thus, that is the first model I build, and carry out the linear regression with 
 
       lm(log(inc_loss) ~ as.factor(dev) + as.factor(ay), data=inc_data) 
@@ -106,7 +106,7 @@ Despising a few outliers, the residual plot below look quite well behaved. In an
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/11.png)
 
-### 4.2.3	  Log-linked GLM Poisson  
+#### 4.2.3	  Log-linked GLM Poisson  
 Since the outcome is right skewed and always positive, the incremental losses seem to be Poisson distributed. Thus I choose using the Poisson family in GLM. The link function is log() to be consistent with the previous linear model, thus the model is modeling the following:
 
       glm(inc_loss ~ factor(ay) + factor(dev), data=inc_data, family=poisson("log"))
@@ -119,7 +119,7 @@ The observed values vs. the fitted values plot is distributed along the diagonal
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/13.png)
 
-__rediction of the claims__
+#### 4.2.4 Prediction of the claims
   
 The intercept term estimates the first log-payment of the first origin period. The other coefficients are then additive to the intercept. Thus, the predictor for the second payment of 1989 would be exp(5.22139 + 0.03866 + 1.52445)=884.038. The second column in the output above gives us immediate access to the standard errors. Based on those estimated coefficients, we can predict the incremental claims payments. The total amount of reserves is the sum of incremental predicted payments beyond year 1997. 
 
@@ -132,19 +132,15 @@ For a better illustration of how fitted my model capture the observed claims dev
 
 There are some overestimations and underestimations and underestimations at the middle year of the claim development. But the fit is satisfying. The total amount of financial instruments that need to be held in claims reserve under this model is 28779.
 
-### Conclusion:
+## Conclusion:
 The main goal of this paper was to learn the preliminary reserving techniques for insurance companies like Merry Insurance Group. Once an appropriate model is built, the predicted claim reserve is approximately around 28778, whether I was using the deterministic method, applying the implemented stochastic reserving models, or building statistical models.  
 
 ----
 
-### Bibliography
+## Bibliography
 Glenn Meyers and Peng Shi, http://www.casact.org/research/index.cfm?fa=loss_reserves_data
 
 Package ‘ChainLadder’, http://cran.r-project.org/web/packages/ChainLadder/ChainLadder.pdf
-
-Arthur Charpentier, Computational Actuarial Science With R, Chapter 14
-
-Zuzana Kaderjakova, Modeling Dependencies in claims reserving
 
 Loss Development Factor, http://www.riskmanagementblog.com/2011/10/03/understanding-loss-development-factors/
 
@@ -152,3 +148,6 @@ Mack chain ladder, http://www.casact.net/library/astin/vol23no2/213.pdf
 
 Boot Strap Chain Ladder, http://www.variancejournal.org/issues/02-02/266.pdf
 
+Arthur Charpentier, Computational Actuarial Science With R, Chapter 14
+
+Zuzana Kaderjakova, Modeling Dependencies in claims reserving
