@@ -132,12 +132,12 @@ For a better illustration of how fitted my model capture the observed claims dev
 
 There are some overestimations and underestimations and underestimations at the middle year of the claim development. But the fit is satisfying. The total amount of financial instruments that need to be held in claims reserve under this model is 28779.
 
-## Conclusion:
+## 5. Conclusion:
 The main goal of this paper was to learn the preliminary reserving techniques for insurance companies like Merry Insurance Group. Once an appropriate model is built, the predicted claim reserve is approximately around 28778, whether I was using the deterministic method, applying the implemented stochastic reserving models, or building statistical models.  
 
 ----
 
-## Bibliography
+## 6. Bibliography
 Glenn Meyers and Peng Shi, http://www.casact.org/research/index.cfm?fa=loss_reserves_data
 
 Package ‘ChainLadder’, http://cran.r-project.org/web/packages/ChainLadder/ChainLadder.pdf
