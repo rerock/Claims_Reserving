@@ -60,8 +60,9 @@ Based on the estimated unobserved values, I can then draw the complete graph of 
 
 #### [4.1.2	Mack chain ladder Implement – Stochastic Reserving](http://www.casact.net/library/astin/vol23no2/213.pdf)
 
-The Mack Chain Ladder model forecasts IBNR (Incurred But Not Reported) claims based on a historical cumulative claim triangle and calculates the standard error for the reserves estimates. It can be regarded as a weighted linear regression through the origin for each development period: lm(y ~ x + 0, weights=w/x^(2- alpha)), where y is the vector of claims at development period k + 1 and x is the vector of claims at development period k.
+The Mack Chain Ladder model forecasts IBNR (Incurred But Not Reported) claims based on a historical cumulative claim triangle and calculates the standard error for the reserves estimates. It can be regarded as a weighted linear regression through the origin for each development period: 
 
+      lm(y ~ x + 0, weights=w/x^(2- alpha)), where y is the vector of claims at development period k + 1 and x is the vector of claims at development period k.
 
 The Mack's method is implemented in the ChainLadder package via the function MackChainLadder. But this method will only works if accident years are independent. To ensure Mack’s Method is applicable for the dataset, we can check whether there are trends in the residual plots below.
 
@@ -89,6 +90,7 @@ The set of reserves obtained in this way forms the predicted distribution, from 
 There are three main categories in statistical predictive modeling: Classical Linear Models, Generalized Linear Models(GLMs), and Data Mining. The differences between Linear Models and GLMs is as followed.
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/9.png)
+
 An easy way to think about GLMs is as models that generalize the error term distribution to a family of distributions, called exponential family. It includes normal, binomial, Poisson, and gamma distributions among others. In addition, the response variable in GLM is related to linear regression through a link function. Common used link functions are Identity, Inverse, Inverse Squared, Log and Logit. 
 
 ### 4.2.1 Pre-Analysis  
@@ -99,11 +101,40 @@ The chain ladder methods uses cumulative claims, but statistical approaches uses
 
 ### 4.2.2 Linear Model with log-transformed outcome 
 Since the distribution has a positive skew, taking a natural logarithm of the variable helps fitting variable into a model. Thus, that is the first model I build, and carry out the linear regression with 
+
       lm(log(inc_loss) ~ as.factor(dev) + as.factor(ay), data=inc_data) 
 Despising a few outliers, the residual plot below look quite well behaved. In an ideal case, the observed values vs. the fitted values plot should also be distributed along the diagonal. The total correlation coefficient between the fitted and observed value is 0.8827, thus I decided to investigate further. 
 
+![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/11.png)
+
+### 4.2.3	  Log-linked GLM Poisson  
+Since the outcome is right skewed and always positive, the incremental losses seem to be Poisson distributed. Thus I choose using the Poisson family in GLM. The link function is log() to be consistent with the previous linear model, thus the model is modeling the following:
+
+      glm(inc_loss ~ factor(ay) + factor(dev), data=inc_data, family=poisson("log"))
+
+Looking at the residual plot below, we can see that I was able to successfully get rid of the residual outlines from the previous model. In fact, the residuals is stationary with zero mean, and constant variance. 
+
+![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/12.png)
+
+The observed values vs. the fitted values plot is distributed along the diagonal. The relationship between observed and fitted value is satisfying, the correlation coefficient is 0.9497. For model fit checking purpose, I also compare the qqPlot(s) from these two models. And the log-linked GLM Poisson indeed fits the data better. 
+
+![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/13.png)
+
+_Prediction of the claims_
+  
+The intercept term estimates the first log-payment of the first origin period. The other coefficients are then additive to the intercept. Thus, the predictor for the second payment of 1989 would be exp(5.22139 + 0.03866 + 1.52445)=884.038. The second column in the output above gives us immediate access to the standard errors. Based on those estimated coefficients, we can predict the incremental claims payments. The total amount of reserves is the sum of incremental predicted payments beyond year 1997. 
+
+       sum(predict(gl,type="response", newdata=subset(Claims, cal > 1997)))
 
 
+For a better illustration of how fitted my model capture the observed claims development. The following graph is provided. The red lines represent the observed incremental losses. The blue lines represent the model fitted values, the green lines stand for the predicted incremental losses. 
+
+![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Plots/14.png)
+
+There are some overestimations and underestimations and underestimations at the middle year of the claim development. But the fit is satisfying. The total amount of financial instruments that need to be held in claims reserve under this model is 28779.
+
+### Conclusion:
+The main goal of this paper was to learn the preliminary reserving techniques for insurance companies like Merry Insurance Group. Once an appropriate model is built, the predicted claim reserve is approximately around 28778, whether I was using the deterministic method, applying the implemented stochastic reserving models, or building statistical models.  
 
 ----
 
@@ -112,4 +143,7 @@ Glenn Meyers and Peng Shi, http://www.casact.org/research/index.cfm?fa=loss_rese
 
 Package ‘ChainLadder’, http://cran.r-project.org/web/packages/ChainLadder/ChainLadder.pdf
 
+Arthur Charpentier, Computational Actuarial Science With R, Chapter 14
+
+Zuzana Kaderjakova, Modeling Dependencies in claims reserving
 
