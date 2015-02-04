@@ -2,7 +2,7 @@
 ## Claims Paid Losses (Mercury Insurance Group)
 ###### _Jenny Liang (Wen Liang)_
 ----
-## 0. Table of Contents
+## 0. Contents
 
 [**1. Introduction**](https://github.com/wliang88/ClaimsLossAnalysis#1-introduction)  
 [**2. Objective**](https://github.com/wliang88/ClaimsLossAnalysis#2-objective)  
@@ -157,6 +157,4 @@ Mack chain ladder, http://www.casact.net/library/astin/vol23no2/213.pdf
 
 Boot Strap Chain Ladder, http://www.variancejournal.org/issues/02-02/266.pdf
 
-Arthur Charpentier, Computational Actuarial Science With R, Chapter 14
 
-Zuzana Kaderjakova, Modeling Dependencies in claims reserving
