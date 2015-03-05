@@ -1,6 +1,6 @@
 
 ## Claims Paid Losses (Mercury Insurance Group)
-###### _Jenny Liang (Wen Liang)_
+
 ----
 ## 0. Contents
 
