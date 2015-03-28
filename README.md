@@ -1,5 +1,5 @@
 
-## Claims Paid Losses (Mercury Insurance Group)
+## Claims Reserving in R
 
 ----
 ## 0. Contents
@@ -16,9 +16,7 @@
 ## 1. Introduction
 
 [Glenn Meyers and Peng Shi](http://www.casact.org/research/index.cfm?fa=loss_reserves_data) provide databases that include major personal and commercial lines of business from U.S. property casualty insurers. For the purpose of this project, only
-the data involving Mercury Insurance Group will be used. Unfortunately, the datasets that contain information for Mercury Insurance Group are only the Workers’ Compensation and Other Liability datasets. I choose Other Liability line of business dataset because Mercury’s information from Workers’ Compensation mostly is zero. 
-
-The Claim Paid Losses in Other Liability Insurance for accident years in 1988-1997 form a development triangle as below. Presenting the data in a triangle structure is because (1) It shows the development of claims over time for each origin period; (2) “ChainLadder” package in R expect triangles as input data sets with development periods along the columns and the origin period in rows
+the data involving Mercury Insurance Group will be used. The Claim Paid Losses in Other Liability Insurance for accident years in 1988-1997 form a development triangle as below. Presenting the data in a triangle structure is because (1) It shows the development of claims over time for each origin period; (2) “ChainLadder” package in R expect triangles as input data sets with development periods along the columns and the origin period in rows
 
 ![](https://raw.githubusercontent.com/wliang88/ClaimsLossAnalysis/master/Data/Triangle_Data.png)
 
